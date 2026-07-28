@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coding Mantis Games 2D Sprite Sheet Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">Coding Mantis Games <span>2D Sprite Sheet Creator</span></a>
+    <div class="topbar-tools"><span>Sprite Sheet Tool</span><button class="export" id="exportButton" disabled>Export sprite sheet</button></div>
+  </header>
+
+  <main class="workspace">
+    <section class="preview-area" aria-label="Animation preview and controls">
+      <div class="section-label">ANIMATION PREVIEW</div>
+      <div class="preview" id="preview">
+        <div class="empty-preview" id="emptyPreview">Choose a folder with PNG images to begin.</div>
+        <img id="frameImage" alt="Animation frame preview" />
+        <div class="frame-count" id="frameCount"></div>
+      </div>
+      <div class="playback">
+        <button class="play-button" id="playButton" disabled>Play</button>
+        <button class="stop-button" id="stopButton" disabled>Stop</button>
+        <label class="speed-control">Speed <input id="speed" type="range" min="1" max="24" value="8" /><output id="speedValue">8 FPS</output></label>
+      </div>
+    </section>
+
+    <aside class="image-panel">
+      <div class="panel-title"><div><p class="section-label">IMAGE WINDOW</p><h1>Frames</h1></div><span id="selectedCount">0 selected</span></div>
+      <div class="sort-row"><span>File name order</span><select id="sortSelect" disabled><option value="natural">Natural</option><option value="asc">A → Z</option><option value="desc">Z → A</option></select></div>
+      <div class="image-list" id="imageList"><p class="empty-list">No PNG images loaded yet.</p></div>
+      <div class="panel-actions">
+        <label class="folder-button" for="folderInput">Select folder</label>
+        <input id="folderInput" type="file" accept="image/png" webkitdirectory directory multiple hidden />
+        <button class="clear-button" id="clearButton" disabled>Clear</button>
+      </div>
+    </aside>
+  </main>
+
+  <section class="guide" aria-labelledby="guideTitle">
+    <h2 id="guideTitle">How to create a 2D animation</h2>
+    <ol>
+      <li>Create a character image with an AI tool such as <a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a> or <a href="https://gemini.google.com/" target="_blank" rel="noreferrer">Gemini</a>. Use a solid background color that does not appear on the character.</li>
+      <li>Create a character animation video with a video-generation tool such as <a href="https://flow.google/" target="_blank" rel="noreferrer">Google Flow</a> or <a href="https://grok.com/" target="_blank" rel="noreferrer">Grok</a>.</li>
+      <li>Upload the video to <a href="https://ezgif.com/video-to-png/ezgif-5bd904328637e117.mp4.html" target="_blank" rel="noreferrer">EZGIF Video to PNG</a> to convert it into an image sequence.</li>
+      <li>Download the ZIP from EZGIF and unzip it.</li>
+      <li>Use <strong>Select folder</strong> to open the unzipped folder.</li>
+      <li>Play the animation, adjust the speed, and turn off unwanted frames.</li>
+      <li>When the animation is ready, click <strong>Export sprite sheet</strong>.</li>
+      <li>The export window automatically picks the top-right background color. If needed, enter a HEX code or use <strong>Pick from image</strong> to sample the correct color.</li>
+      <li>Set the background-color tolerance and export quality.</li>
+      <li>Enter a filename and click <strong>Export PNG</strong>.</li>
+    </ol>
+    <p>Use the exported PNG sprite sheet in your game however you need.</p>
+  </section>
+
+  <footer><span>Coding Mantis Games (OPC) Private Limited</span><a href="mailto:studio@codingmantisgames.com">studio@codingmantisgames.com</a></footer>
+  <dialog class="export-dialog" id="exportDialog">
+    <form method="dialog" class="dialog-card" id="exportForm">
+      <div class="dialog-heading"><div><p class="section-label">SPRITE SHEET EXPORT</p><h2>Export settings</h2></div><button class="close-dialog" value="cancel" aria-label="Close">Close</button></div>
+      <p class="dialog-copy">The chosen color will become transparent. Enabled frames are placed left-to-right, then top-to-bottom, using their current list order.</p>
+      <label class="field color-field">Background HEX color to remove <input type="text" id="keyColor" value="#000000" maxlength="7" spellcheck="false" aria-describedby="colorHint" /><button class="pick-color" type="button" id="pickColorButton">Pick from image</button><span id="colorHint">Example: #000000</span></label>
+      <label class="field">Color tolerance <input type="range" id="tolerance" min="0" max="100" value="20" /><output id="toleranceValue">20</output></label>
+      <label class="field export-name">Export filename <input type="text" id="exportName" value="coding-mantis-sprite-sheet" maxlength="100" /> <span>.png</span></label>
+      <label class="field export-quality">Export quality <select id="exportQuality"><option value="1">Original pixels (lossless)</option><option value="2">High resolution (2×)</option><option value="4">Ultra resolution (4×)</option></select></label>
+      <p class="sheet-info" id="sheetInfo">Frames are cropped from the centre to a square using their original height. No resizing is applied.</p>
+      <div class="dialog-actions"><button class="clear-button" value="cancel">Cancel</button><button class="export" type="submit">Export PNG</button></div>
+    </form>
+  </dialog>
+  <dialog class="picker-dialog" id="pickerDialog">
+    <div class="picker-card"><div class="dialog-heading"><div><p class="section-label">COLOR PICKER</p><h2>Pick background color</h2></div><button class="close-dialog" id="closePicker" type="button">Close</button></div><p>Click the background color in this image.</p><img id="pickerImage" alt="First animation frame for color selection" /></div>
+  </dialog>
+  <script src="script.js"></script>
+</body>
+</html>
