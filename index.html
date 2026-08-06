@@ -60,8 +60,8 @@
       <li>Play the animation, adjust the speed, and turn off unwanted frames.</li>
       <li>When the animation is ready, click <strong>Export sprite sheet</strong>.</li>
       <li>The export window automatically picks the top-right background color. If needed, enter a HEX code or use <strong>Pick from image</strong> to sample the correct color.</li>
-      <li>Choose the centred square crop size. It defaults to the height of the first selected image; for example, enter <strong>512</strong> to crop every frame from its centre into a 512 × 512 pixel square.</li>
-      <li>Set the background-color tolerance and export quality.</li>
+      <li>Choose whether to crop images. Crop is enabled by default; turn it off to keep every image at its full size.</li>
+      <li>Set the background-color tolerance, export quality, and maximum images per sheet. When the limit is reached, additional numbered sprite sheets are created.</li>
       <li>Enter a filename and click <strong>Export PNG</strong>.</li>
     </ol>
     <p>Use the exported PNG sprite sheet in your game however you need.</p>
@@ -75,7 +75,9 @@
       <label class="field color-field">Background HEX color to remove <input type="text" id="keyColor" value="#000000" maxlength="7" spellcheck="false" /><button class="pick-color" type="button" id="pickColorButton">Pick from image</button><span class="color-swatch" id="colorSwatch" aria-label="Selected background color"></span></label>
       <label class="field">Color tolerance <input type="range" id="tolerance" min="0" max="100" value="20" /><output id="toleranceValue">20</output></label>
       <label class="field export-name">Export filename <input type="text" id="exportName" value="coding-mantis-sprite-sheet" maxlength="100" /> <span>.png</span></label>
-      <label class="field crop-size">Centre crop size <input type="number" id="cropSize" min="1" max="8192" step="1" inputmode="numeric" /> <span>px</span></label>
+      <label class="field crop-toggle">Crop images <input type="checkbox" id="cropEnabled" checked /></label>
+      <label class="field crop-size" id="cropSizeField">Centre crop size <input type="number" id="cropSize" min="1" max="8192" step="1" inputmode="numeric" /> <span>px</span></label>
+      <label class="field max-images">Max images per sheet <input type="number" id="maxImagesPerSheet" value="100" min="1" max="10000" step="1" inputmode="numeric" /> <span>images</span></label>
       <label class="field export-quality">Export quality <select id="exportQuality"><option value="1">Original pixels (lossless)</option><option value="2">High resolution (2×)</option><option value="4">Ultra resolution (4×)</option></select></label>
       <p class="sheet-info" id="sheetInfo">Frames are cropped from the centre to a square using their original height. No resizing is applied.</p>
       <div class="dialog-actions"><button class="clear-button" id="cancelExport" type="button">Cancel</button><button class="export" type="submit">Export PNG</button></div>
